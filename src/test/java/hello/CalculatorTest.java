@@ -12,6 +12,7 @@ class CalculatorTest {
 	@Test
 	void testDivide() {
 		
+		System.out.println("HELLO!!!");
 	}
 
 }
