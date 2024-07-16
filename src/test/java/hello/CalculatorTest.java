@@ -1,23 +1,44 @@
 package hello;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Test Math operations in Calculator class")
 class CalculatorTest {
-
+	
+	Calculator calculator;
+	
+	@BeforeAll
+	static void setup() {
+		System.out.println("Executing @BeforeAll method");
+	}
+	
+	@AfterAll
+	static void cleanup() {
+		System.out.println("Executing @AfterAll method");
+	}
+	
 	@BeforeEach
-	void setUp() throws Exception {
+    void beforeEach() {
+		calculator = new Calculator();
+		System.out.println("Executing @BeforeEach method");
+	}
+	
+	@AfterEach
+    void beforeAll() {
+		System.out.println("Executing @AfterEach method");
 	}
 
 	@DisplayName("Test Four divided by Two")
 	@Test
 	void testIntegerDivision_whenFourIsDividedByTwo_ShouldReturnTwo() {
-		Calculator calculator = new Calculator();
-		
 		int result = calculator.integerDivision(4, 2);
 		
 		assertEquals(2, result, 2 + " + " + result + " are not equal");
@@ -26,17 +47,18 @@ class CalculatorTest {
 	@DisplayName("Test Division by Zero")
 	@Test
 	void testIntegerDivision_whenDividendIsZero_ShouldThrowArithmeticException() {
-		Calculator calculator = new Calculator();
 		
-		int result = calculator.integerDivision(4, 2);
+		int dividend = 4;
+		int divisor = 0;
 		
-		assertEquals(2, result, 2 + " + " + result + " are not equal");
+		assertThrows(ArithmeticException.class, () -> {
+			calculator.integerDivision(dividend, divisor);
+		}, "Division by zero should throw Arithmetic Exception.");
 	}
 	
 	@DisplayName("Test 33 - 1 = 32")
 	@Test
 	void integerSubtraction() {
-		Calculator calculator = new Calculator();
 		
 		int minuend = 33;
 		int subtrahend = 1;
