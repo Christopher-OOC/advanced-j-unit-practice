@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("Test Math operations in Calculator class")
+@DisplayName("Test Math operations in Calculator classs")
 class CalculatorTest {
 	
 	Calculator calculator;
