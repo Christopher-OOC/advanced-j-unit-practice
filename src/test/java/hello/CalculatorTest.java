@@ -1,7 +1,10 @@
 package hello;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -9,6 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("Test Math operations in Calculator class")
 class CalculatorTest {
@@ -56,17 +64,36 @@ class CalculatorTest {
 		}, "Division by zero should throw Arithmetic Exception.");
 	}
 	
-	@DisplayName("Test 33 - 1 = 32")
-	@Test
-	void integerSubtraction() {
+	@ParameterizedTest
+	@ValueSource(strings= {"John", "Kate", "Alice"})
+	void valueSourceDemostration(String firstName) {
+		System.out.println(firstName);
 		
-		int minuend = 33;
-		int subtrahend = 1;
-		int expectedResult = 32;
+		assertNotNull(firstName);
+	}
+	
+	@DisplayName("Test Integer Subtraction [minuend, subtrahend, expectedResult]")
+	//@Test
+	@ParameterizedTest
+//	@MethodSource("integerSubtractionInputParameters")
+	@CsvSource({
+		"33, 1, 32",
+		"54, 1, 53",
+		"24, 1, 23"
+		})
+	void integerSubtraction(int minuend, int subtrahend, int expectedResult) {
 		
 		int result = calculator.integerSubtraction(minuend, subtrahend);
 		
 		assertEquals(expectedResult, result, () -> minuend + " - " + subtrahend + " did not produce " + expectedResult);
 	}
-
+	
+//	private static Stream<Arguments> integerSubtractionInputParameters() {
+//		
+//		return Stream.of(
+//				Arguments.of(33, 1, 32),
+//				Arguments.of(54, 1, 53),
+//				Arguments.of(24, 1, 23)
+//				);
+//	}
 }
